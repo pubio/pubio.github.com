@@ -11,11 +11,11 @@ function storeYourName(){
 
 function loadPage(){
 	if(typeof(Storage)=="undefined"){
-		document.getElementById("wholePage").innerHTML="You need a HTML5 capable browser (e.g. Chrome, Safari, FireFox)";
+		document.getElementById("wholePage").innerHTML = "You need a HTML5 capable browser (e.g. Chrome, Safari, FireFox)";
 		return;
 	}
 	
-	document.getElementById("yourName").value=localStorage.yourName;
+	document.getElementById("yourName").value = (localStorage.yourName == "undefined" ? "" : localStorage.yourName);
 }
 
 </script>
