@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <title>pub.io</title>
 <script type="text/javascript">
+
 function storeYourName(){
 	localStorage.yourName = document.getElementById("yourName").value;
 }
@@ -16,6 +17,21 @@ function loadPage(){
 	
 	document.getElementById("yourName").value=localStorage.yourName;
 }
+
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33558918-1']);
+  _gaq.push(['_setDomainName', 'pub.io']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
 </script>
 </head>
 <body onLoad="loadPage()">
