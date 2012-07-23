@@ -15,9 +15,12 @@ function loadPage(){
 		return;
 	}
 	
-	document.getElementById("yourName").value = (localStorage.yourName == "undefined" ? "" : localStorage.yourName);
+	document.getElementById("yourName").value = (isNotSet(localStorage.yourName) ? "" : localStorage.yourName);
 }
 
+function isNotSet(s){
+	return name == undefined || name == null || name == "undefined";
+}
 </script>
 <script type="text/javascript">
 
