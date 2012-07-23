@@ -1,1 +1,31 @@
-pub
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>pub.io</title>
+<script type="text/javascript">
+function storeYourName(){
+	localStorage.yourName = document.getElementById("yourName").value;
+}
+
+function loadPage(){
+	if(typeof(Storage)=="undefined"){
+		document.getElementById("wholePage").innerHTML="You need a HTML5 capable browser (e.g. Chrome, Safari, FireFox)";
+		return;
+	}
+	
+	document.getElementById("yourName").value=localStorage.yourName;
+}
+</script>
+</head>
+<body onLoad="loadPage()">
+<div id="wholePage">
+
+<form>
+<strong>Welcome</strong><br />
+<input type="text" id="yourName" onChange="storeYourName();" placeholder="Your Name" />
+</form>
+
+</div>
+</body>
+</html>
