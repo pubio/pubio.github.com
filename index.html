@@ -3,41 +3,39 @@
 <head>
 <meta charset="UTF-8" />
 <title>pub.io</title>
+<!-- TODO: Configure custom from http://modernizr.com/download/ -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js"></script>
 <script type="text/javascript">
+// Google Analytics
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-33558918-1']);
+_gaq.push(['_setDomainName', 'pub.io']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ })();
 
 function storeYourName(){
 	localStorage.yourName = document.getElementById("yourName").value;
 }
 
-function loadPage(){
-	if(typeof(Storage)=="undefined"){
-		document.getElementById("wholePage").innerHTML = "You need a HTML5 capable browser (e.g. Chrome, Safari, FireFox)";
-		return;
-	}
-	
-	document.getElementById("yourName").value = (isNotSet(localStorage.yourName) ? "" : localStorage.yourName);
-}
-
 function isNotSet(s){
-	return name == undefined || name == null || name == "undefined";
+	return typeof(s) == undefined || name == undefined || name == null || name == "undefined";
 }
-</script>
-<script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-33558918-1']);
-  _gaq.push(['_setDomainName', 'pub.io']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
+function loadPage(){
+	if(Modernizr.localstorage){
+		document.getElementById("yourName").value = (isNotSet(localStorage.yourName) ? "" : localStorage.yourName);
+	} else {
+		document.getElementById("wholePage").innerHTML = "You need a HTML5 capable browser (e.g. Chrome, Safari, FireFox)";
+	}
+}
 </script>
 </head>
-<body onLoad="loadPage()">
+<body onload="loadPage()">
 <div id="wholePage">
 
 <form>
