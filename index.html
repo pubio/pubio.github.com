@@ -45,6 +45,39 @@ function loadPage(){
 <input type="text" id="yourName" onChange="setProp('yourName')" placeholder="Your Name" />
 </form>
 
+<p />
+
+<script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'search',
+  search: '#olympics',
+  interval: 30000,
+  title: 'international olympics',
+  subject: '/pub',
+  width: 'auto',
+  height: 300,
+  theme: {
+    shell: {
+      background: '#d9bb8f',
+      color: '#ffffff'
+    },
+    tweets: {
+      background: '#ffffff',
+      color: '#444444',
+      links: '#1985b5'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: true,
+    live: true,
+    behavior: 'default'
+  }
+}).render().start();
+</script>
+
 </div>
 </body>
 </html>
