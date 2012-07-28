@@ -31,14 +31,11 @@ function getProp(key){
 function loadPage(){
 	if(Modernizr.localstorage){
 		document.getElementById("yourName").value = getProp("yourName");
-	} else {
-		document.getElementById("wholePage").innerHTML = "You need a HTML5 capable browser (e.g. Chrome, Safari, FireFox)";
 	}
 }
 </script>
 </head>
 <body onload="loadPage()">
-<div id="wholePage">
 
 <form>
 <strong>Welcome</strong><br />
@@ -78,6 +75,7 @@ new TWTR.Widget({
 }).render().start();
 </script>
 
-</div>
+<p>#ideation in progress</p>
+
 </body>
 </html>
