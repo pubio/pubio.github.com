@@ -18,17 +18,19 @@ _gaq.push(['_trackPageview']);
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
  })();
 
-function storeYourName(){
-	localStorage.yourName = document.getElementById("yourName").value;
+// Persistence
+function setProp(key){
+	localStorage[key] = document.getElementById(key).value;
 }
 
-function isNotSet(s){
-	return typeof(s) == undefined || name == undefined || name == null || name == "undefined";
+function getProp(key){
+	return key in localStorage ? localStorage[key] : "";
 }
 
+// View
 function loadPage(){
 	if(Modernizr.localstorage){
-		document.getElementById("yourName").value = (isNotSet(localStorage.yourName) ? "" : localStorage.yourName);
+		document.getElementById("yourName").value = getProp("yourName");
 	} else {
 		document.getElementById("wholePage").innerHTML = "You need a HTML5 capable browser (e.g. Chrome, Safari, FireFox)";
 	}
@@ -40,7 +42,7 @@ function loadPage(){
 
 <form>
 <strong>Welcome</strong><br />
-<input type="text" id="yourName" onChange="storeYourName();" placeholder="Your Name" />
+<input type="text" id="yourName" onChange="setProp('yourName')" placeholder="Your Name" />
 </form>
 
 </div>
