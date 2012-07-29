@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8" />
 <title>pub.io</title>
-<!-- TODO: Configure custom from http://modernizr.com/download/ -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js"></script>
 <script type="text/javascript">
 // Google Analytics
@@ -27,37 +26,61 @@ function getProp(key){
 	return key in localStorage ? localStorage[key] : "";
 }
 
+function setTwitterSearch(){
+	var s = document.getElementById("twitterSearch").value || "#Olympics";
+	feed1.setSearch(s);
+	feed1.setTitle("Watching " + s + " on Twitter");
+	feed1._setUrl();
+	setProp('twitterSearch');
+}
+
 // View
 function loadPage(){
 	if(Modernizr.localstorage){
 		document.getElementById("yourName").value = getProp("yourName");
+		document.getElementById("twitterSearch").value = getProp("twitterSearch");
+		setTwitterSearch();
 	}
 }
 </script>
+<style>
+body {
+font-family: lucida grande,lucida,tahoma,helvetica,arial,sans-serif;
+font-size: 8px;	
+}
+
+</style>
 </head>
 <body onload="loadPage()">
 
 <form>
-<strong>Welcome</strong><br />
-<input type="text" id="yourName" onChange="setProp('yourName')" placeholder="Your Name" />
+<label>Welcome
+	<input type="text" id="yourName" onChange="setProp('yourName')" placeholder="Your Name" /> 
+</label>
+
+<label>Twitter Search
+	<input type="text" id="twitterSearch" onChange="setTwitterSearch()" placeholder="#Olympics" />
+</label>
+
+
 </form>
 
 <p />
 
 <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
 <script>
-new TWTR.Widget({
+var feed1 = new TWTR.Widget({
   version: 2,
   type: 'search',
   search: '#olympics',
-  interval: 30000,
-  title: 'international olympics',
-  subject: '/pub',
+  interval: 6000,
+  title: 'Watching #Olympics on Twitter',
+  subject: '',
   width: 'auto',
   height: 300,
   theme: {
     shell: {
-      background: '#d9bb8f',
+      background: '#293AB1',
       color: '#ffffff'
     },
     tweets: {
@@ -74,8 +97,6 @@ new TWTR.Widget({
   }
 }).render().start();
 </script>
-
-<p>#ideation in progress</p>
 
 </body>
 </html>
