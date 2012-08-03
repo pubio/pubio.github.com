@@ -4,7 +4,10 @@
 <meta charset="UTF-8" />
 <title>pub.io</title>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js"></script>
+<script src="http://js.pusher.com/1.11/pusher.min.js"></script>
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
 <script type="text/javascript">
+
 // Google Analytics
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-33558918-1']);
@@ -26,6 +29,7 @@ function getProp(key){
 	return key in localStorage ? localStorage[key] : "";
 }
 
+// View
 function setTwitterSearch(){
 	var s = document.getElementById("twitterSearch").value || "#Olympics";
 	feed1.setSearch(s);
@@ -34,40 +38,65 @@ function setTwitterSearch(){
 	setProp('twitterSearch');
 }
 
-// View
-function loadPage(){
+window.onload = function (){
+	// Initialization
 	if(Modernizr.localstorage){
 		document.getElementById("yourName").value = getProp("yourName");
 		document.getElementById("twitterSearch").value = getProp("twitterSearch");
 		setTwitterSearch();
 	}
+	
+	// Event handlers
+	document.getElementById("yourName").onchange = function(){
+		setProp('yourName');
+	}
+	
+	document.getElementById("twitterSearch").onchange = function(){
+		setTwitterSearch();
+	}
+	
+	document.getElementById("selectRecommended").onclick = function(){
+		document.getElementById("twitterSearch").value = document.getElementById("recommended").value;
+		setTwitterSearch();
+	}
+	
+	document.getElementById("pushRecommended").onclick = function(){
+		alert("pushed \"" + document.getElementById("recommended").value + "\" to /dev/null");
+	}
 }
+
+// Bind to Pusher channel
+var pusher = new Pusher('5d5d9256e667b1c911a4');
+var channel = pusher.subscribe('test_channel');
+channel.bind('my_event', function(data) {
+	document.getElementById("recommended").value = data;
+});
 </script>
 <style>
 body {
 font-family: lucida grande,lucida,tahoma,helvetica,arial,sans-serif;
 font-size: 10px;	
 }
-
 </style>
 </head>
-<body onload="loadPage()">
+<body>
 
 <form>
 <label>Welcome
-	<input type="text" id="yourName" onChange="setProp('yourName')" placeholder="Your Name" /> 
+	<input type="text" id="yourName" placeholder="Your Name" /> 
 </label>
-
 <label>Twitter Search
-	<input type="text" id="twitterSearch" onChange="setTwitterSearch()" placeholder="#Olympics" />
+	<input type="text" id="twitterSearch" placeholder="#Olympics" />
 </label>
 
-
+<label>Peer Recommendation
+	<input type="text" id="recommended" placeholder="" />
+	<input type="button" id="selectRecommended" value="Select This!">  
+	<input type="button" id="pushRecommended" value="Push it Forward!">
+</label>
 </form>
 
-<p />
 
-<script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
 <script>
 var feed1 = new TWTR.Widget({
   version: 2,
@@ -76,7 +105,7 @@ var feed1 = new TWTR.Widget({
   interval: 6000,
   title: 'Watching #Olympics on Twitter',
   subject: '',
-  width: 'auto',
+  width: '50%',
   height: 300,
   theme: {
     shell: {
@@ -97,6 +126,7 @@ var feed1 = new TWTR.Widget({
   }
 }).render().start();
 </script>
+
 
 </body>
 </html>
