@@ -1,8 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>pub.io</title>
+	<meta charset="UTF-8" />
+	<title>pub.io</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<link href="css/bootstrap.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
 <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js"></script>
 <script src="http://js.pusher.com/1.11/pusher.min.js"></script>
 <script src="http://widgets.twimg.com/j/2/widget.js"></script>
@@ -45,7 +61,7 @@ $(document).ready(function() {
 		var results = "";
 		var r = json.recommendations
 		for(i in r){
-			results +=  "<span class='rec'>" + r[i].value + "</span>";
+			results +=  "<span class='badge'>" + r[i].value + "</span>";
 		}
 	    $('#recommendations').html(results);
 	  });
@@ -85,15 +101,30 @@ channel.bind('my_event', function(data) {
 	document.getElementById("recommended").value = data;
 });
 </script>
-<style>
-body {
-font-family: lucida grande,lucida,tahoma,helvetica,arial,sans-serif;
-font-size: 10px;	
-}
-.rec{ border-radius: 15px; background-color: #6699ff; border-padding: 5px; height: 10px; width: 50px; }
-</style>
 </head>
 <body>
+
+	<div class="navbar navbar-fixed-top">
+	      <div class="navbar-inner">
+	        <div class="container">
+	          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </a>
+	          <a class="brand" href="#">pub.io</a>
+	          <div class="nav-collapse">
+	            <ul class="nav">
+	              <li class="active"><a href="#">Home</a></li>
+	              <li><a href="#about">About</a></li>
+	              <li><a href="#contact">Contact</a></li>
+	            </ul>
+	          </div><!--/.nav-collapse -->
+	        </div>
+	      </div>
+	    </div>
+
+		<div class="container">
 
 <form>
 <label>Welcome
@@ -104,12 +135,19 @@ font-size: 10px;
 </label>
 
 <label>Peer Recommendation
+	
+	
+	<div class="btn-group">
+	  <button class="btn" id="selectRecommended">Select This!</button>
+	  <button class="btn" id="pushRecommended">Push it Forward!</button>
 	<input type="text" id="recommended" placeholder="" />
-	<input type="button" id="selectRecommended" value="Select This!">  
-	<input type="button" id="pushRecommended" value="Push it Forward!">
+	</div>
+	
 </label>
 </form>
+
 Trending Recommendations: <div id="recommendations"></div>
+
 
 <script>
 var feed1 = new TWTR.Widget({
@@ -141,6 +179,22 @@ var feed1 = new TWTR.Widget({
 }).render().start();
 </script>
 
+
+</div> <!-- end container -->
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap-transition.js"></script>
+<script src="js/bootstrap-alert.js"></script>
+<script src="js/bootstrap-modal.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+<script src="js/bootstrap-scrollspy.js"></script>
+<script src="js/bootstrap-tab.js"></script>
+<script src="js/bootstrap-tooltip.js"></script>
+<script src="js/bootstrap-popover.js"></script>
+<script src="js/bootstrap-button.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<script src="js/bootstrap-carousel.js"></script>
+<script src="js/bootstrap-typeahead.js"></script>
 
 </body>
 </html>
