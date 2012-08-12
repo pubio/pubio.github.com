@@ -57,7 +57,6 @@ function setTwitterSearch(){
 
 $(document).ready(function() {
 
-
 	$.getJSON('http://secure-shelf-4168.herokuapp.com/recommendations/?callback=?', function(json) { 
 		var results = "";
 		var r = json.recommendations
@@ -85,16 +84,11 @@ window.onload = function (){
 	document.getElementById("twitterSearch").onchange = function(){
 		setTwitterSearch();
 	}
-	/*
-	document.getElementById("selectRecommended").onclick = function(){
-		document.getElementById("twitterSearch").value = document.getElementById("recommended").value;
-		setTwitterSearch();
-	}
 	
 	document.getElementById("pushRecommended").onclick = function(){
-		alert("pushed \"" + document.getElementById("recommended").value + "\" to /dev/null");
+		//TODO: push to backend so it can broadcast out: document.getElementById("twitterSearch").value
+		event.preventDefault();
 	}
-	*/
 	
 	$("a.pushedRecommendation").click(function(event){
 		event.preventDefault();
@@ -108,7 +102,7 @@ window.onload = function (){
 var pusher = new Pusher('5d5d9256e667b1c911a4');
 var channel = pusher.subscribe('test_channel');
 channel.bind('my_event', function(data) {
-	document.getElementById("recommended").value = data;
+	document.getElementById("twitterSearch").value = data;
 });
 </script>
 </head>
@@ -133,7 +127,7 @@ channel.bind('my_event', function(data) {
 	        </div>
 	      </div>
 	    </div>
-
+	
 		<div class="container">
 
 <form>
@@ -141,23 +135,12 @@ channel.bind('my_event', function(data) {
 	<input type="text" id="yourName" placeholder="Your Name" /> 
 </label>
 <label>Twitter Search
-	<input type="text" id="twitterSearch" placeholder="#Olympics" />
-</label>
-
-<label>Peer Recommendation
-	
-	
-	<div class="btn-group">
-	  <button class="btn" id="selectRecommended">Select This!</button>
-	  <button class="btn" id="pushRecommended">Push it Forward!</button>
-	<input type="text" id="recommended" placeholder="" />
-	</div>
-	
+	<input type="text" id="twitterSearch" placeholder="#Olympics" /> 
+	<button class="btn" id="pushRecommended" style="vertical-align: top;">Recommend</button>
 </label>
 </form>
 
 Trending Recommendations: <div id="recommendations"></div>
-
 
 <script>
 var feed1 = new TWTR.Widget({
@@ -181,7 +164,7 @@ var feed1 = new TWTR.Widget({
     }
   },
   features: {
-    scrollbar: false,
+    scrollbar: true,
     loop: true,
     live: true,
     behavior: 'default'
