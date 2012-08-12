@@ -19,10 +19,11 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.0.4/bootstrap.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js"></script>
 <script src="http://js.pusher.com/1.11/pusher.min.js"></script>
 <script src="http://widgets.twimg.com/j/2/widget.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript">
 
 // Google Analytics
@@ -83,7 +84,7 @@ window.onload = function (){
 	document.getElementById("twitterSearch").onchange = function(){
 		setTwitterSearch();
 	}
-	
+	/*
 	document.getElementById("selectRecommended").onclick = function(){
 		document.getElementById("twitterSearch").value = document.getElementById("recommended").value;
 		setTwitterSearch();
@@ -92,6 +93,7 @@ window.onload = function (){
 	document.getElementById("pushRecommended").onclick = function(){
 		alert("pushed \"" + document.getElementById("recommended").value + "\" to /dev/null");
 	}
+	*/
 }
 
 // Bind to Pusher channel
@@ -179,22 +181,7 @@ var feed1 = new TWTR.Widget({
 }).render().start();
 </script>
 
-
 </div> <!-- end container -->
-
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap-transition.js"></script>
-<script src="js/bootstrap-alert.js"></script>
-<script src="js/bootstrap-modal.js"></script>
-<script src="js/bootstrap-dropdown.js"></script>
-<script src="js/bootstrap-scrollspy.js"></script>
-<script src="js/bootstrap-tab.js"></script>
-<script src="js/bootstrap-tooltip.js"></script>
-<script src="js/bootstrap-popover.js"></script>
-<script src="js/bootstrap-button.js"></script>
-<script src="js/bootstrap-collapse.js"></script>
-<script src="js/bootstrap-carousel.js"></script>
-<script src="js/bootstrap-typeahead.js"></script>
 
 </body>
 </html>
