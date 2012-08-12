@@ -8,9 +8,8 @@
     <meta name="author" content="">
 	<link href="css/bootstrap.css" rel="stylesheet">
     <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
+	body { padding-top: 60px; }
+	a.pushedRecommendation{ color:#fff; }
     </style>
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -58,14 +57,16 @@ function setTwitterSearch(){
 
 $(document).ready(function() {
 
+
 	$.getJSON('http://secure-shelf-4168.herokuapp.com/recommendations/?callback=?', function(json) { 
 		var results = "";
 		var r = json.recommendations
 		for(i in r){
-			results +=  "<span class='badge'>" + r[i].value + "</span>";
+			results +=  "<span class='badge'><a class='pushedRecommendation'>" + r[i].value + "</a></span>";
 		}
 	    $('#recommendations').html(results);
 	  });
+	
 });
 
 window.onload = function (){
@@ -94,6 +95,13 @@ window.onload = function (){
 		alert("pushed \"" + document.getElementById("recommended").value + "\" to /dev/null");
 	}
 	*/
+	
+	$("a.pushedRecommendation").click(function(event){
+		event.preventDefault();
+		document.getElementById("twitterSearch").value = $(this).text();
+		setTwitterSearch();
+	 });
+	
 }
 
 // Bind to Pusher channel
