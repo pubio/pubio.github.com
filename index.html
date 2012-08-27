@@ -56,8 +56,8 @@ function setTwitterSearch(){
 }
     
 function loadRecommendations(){
-    $.getJSON('http://localhost:5000/recommendations/?callback=?', function(json) { 
-        //$.getJSON('http://secure-shelf-4168.herokuapp.com/recommendations/?callback=?', function(json) { 
+    //$.getJSON('http://localhost:5000/recommendations/?callback=?', function(json) { 
+    $.getJSON('http://secure-shelf-4168.herokuapp.com/recommendations/?callback=?', function(json) { 
          var results = "";
          var r = json.recommendations
          for(i in r){
@@ -98,7 +98,7 @@ window.onload = function (){
     $("#recommend").click(function(){
             event.preventDefault();
             $.post(  
-                'http://localhost:5000/recommended/',  
+                'http://secure-shelf-4168.herokuapp.com/recommended/',  
                 'recommendation=' + $("#twitterSearch").val(),  
                 function(res){  
                    $("#result").html(res);
