@@ -54,18 +54,21 @@ function setTwitterSearch(){
 	feed1._setUrl();
 	setProp('twitterSearch');
 }
+    
+function loadRecommendations(){
+    $.getJSON('http://localhost:5000/recommendations/?callback=?', function(json) { 
+        //$.getJSON('http://secure-shelf-4168.herokuapp.com/recommendations/?callback=?', function(json) { 
+         var results = "";
+         var r = json.recommendations
+         for(i in r){
+             results +=  "<span class='badge'><a class='pushedRecommendation'>" + r[i].value + "</a></span>";
+         }
+         $('#recommendations').html(results);
+    });
+}
 
 $(document).ready(function() {
-
-	$.getJSON('http://secure-shelf-4168.herokuapp.com/recommendations/?callback=?', function(json) { 
-		var results = "";
-		var r = json.recommendations
-		for(i in r){
-			results +=  "<span class='badge'><a class='pushedRecommendation'>" + r[i].value + "</a></span>";
-		}
-	    $('#recommendations').html(results);
-	  });
-	
+    loadRecommendations();
 });
 
 window.onload = function (){
@@ -85,16 +88,26 @@ window.onload = function (){
 		setTwitterSearch();
 	}
 	
-	document.getElementById("pushRecommended").onclick = function(){
-		//TODO: push to backend so it can broadcast out: document.getElementById("twitterSearch").value
-		event.preventDefault();
-	}
 	
 	$("a.pushedRecommendation").click(function(event){
 		event.preventDefault();
 		document.getElementById("twitterSearch").value = $(this).text();
 		setTwitterSearch();
 	 });
+    
+    $("#recommend").click(function(){
+            event.preventDefault();
+            $.post(  
+                'http://localhost:5000/recommended/',  
+                'recommendation=' + $("#twitterSearch").val(),  
+                function(res){  
+                   $("#result").html(res);
+                },  
+                "html"
+            );
+                          
+            loadRecommendations();
+    });
 	
 }
 
@@ -136,11 +149,12 @@ channel.bind('my_event', function(data) {
 </label>
 <label>Twitter Search
 	<input type="text" id="twitterSearch" placeholder="#Olympics" /> 
-	<button class="btn" id="pushRecommended" style="vertical-align: top;">Recommend</button>
+	<button class="btn" id="recommend" style="vertical-align: top;">Recommend</button>
+    <span id="result"></span>
 </label>
 </form>
 
-Trending Recommendations: <div id="recommendations"></div>
+Recent Recommendations: <div id="recommendations"></div>
 
 <script>
 var feed1 = new TWTR.Widget({
