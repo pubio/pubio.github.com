@@ -9,7 +9,7 @@
 	<link href="css/bootstrap.css" rel="stylesheet">
     <style>
 	body { padding-top: 60px; }
-	a.pushedRecommendation{ color:#fff; }
+	a.rec{ color:#fff; }
     </style>
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -54,16 +54,26 @@ function setTwitterSearch(){
 	feed1._setUrl();
 	setProp('twitterSearch');
 }
-    
+
+var AJAX_URL = window.location.protocol == "file:" ? 'http://localhost:5000' : 'http://secure-shelf-4168.herokuapp.com';
+
 function loadRecommendations(){
-    //$.getJSON('http://localhost:5000/recommendations/?callback=?', function(json) { 
-    $.getJSON('http://secure-shelf-4168.herokuapp.com/recommendations/?callback=?', function(json) { 
+    $.getJSON(AJAX_URL + '/recommendations/?callback=?', function(json) { 
          var results = "";
          var r = json.recommendations
          for(i in r){
-             results +=  "<span class='badge'><a class='pushedRecommendation'>" + r[i].value + "</a></span>";
+             results +=  "<span class='badge'><a class='rec'>" + r[i].value + "</a></span>";
          }
          $('#recommendations').html(results);
+    });
+    
+    $.getJSON(AJAX_URL + '/topRecommendations/?callback=?', function(json) { 
+         var results = "";
+         var r = json.topRecommendations
+         for(i in r){
+             results +=  "<span class='badge'><a class='rec'>" + r[i].value + "</a> (" + r[i].score + ")</span>";
+         }
+         $('#topRecommendations').html(results);
     });
 }
 
@@ -89,7 +99,7 @@ window.onload = function (){
 	}
 	
 	
-	$("a.pushedRecommendation").click(function(event){
+	$("a.rec").click(function(event){
 		event.preventDefault();
 		document.getElementById("twitterSearch").value = $(this).text();
 		setTwitterSearch();
@@ -98,7 +108,7 @@ window.onload = function (){
     $("#recommend").click(function(){
             event.preventDefault();
             $.post(  
-                'http://secure-shelf-4168.herokuapp.com/recommended/',  
+                AJAX_URL + '/recommended/',  
                 'recommendation=' + $("#twitterSearch").val(),  
                 function(res){  
                    $("#result").html(res);
@@ -155,6 +165,7 @@ channel.bind('my_event', function(data) {
 </form>
 
 Recent Recommendations: <div id="recommendations"></div>
+Top Recommendations: <div id="topRecommendations"></div>
 
 <script>
 var feed1 = new TWTR.Widget({
