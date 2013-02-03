@@ -24,7 +24,6 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-<script src="http://js.pusher.com/1.11/pusher.min.js"></script>
 <script src="http://widgets.twimg.com/j/2/widget.js"></script>
 <script type="text/javascript">
 
@@ -97,16 +96,9 @@ window.onload = function (){
     });
 	
 }
-
-// Bind to Pusher channel
-var pusher = new Pusher('5d5d9256e667b1c911a4');
-var channel = pusher.subscribe('test_channel');
-channel.bind('my_event', function(data) {
-	document.getElementById("twitterSearch").value = data;
-});
 </script>
 </head>
-<body>
+<body ng-app="recommendationApp">
 
 	<div class="navbar navbar-inverse navbar-fixed-top">
 	      <div class="navbar-inner">
@@ -124,11 +116,15 @@ channel.bind('my_event', function(data) {
 	              <li><a href="#contact">Contact</a></li>
 	            </ul>
 	          </div><!--/.nav-collapse -->
+            <form class="navbar-search pull-right">
+				{{login.name}}
+            </form>
+              
 	        </div>
 	      </div>
 	    </div>
 	
-		<div class="container">
+<div class="container">
 
 <form>
 <label>Welcome
@@ -141,7 +137,7 @@ channel.bind('my_event', function(data) {
 </label>
 </form>
 
-<div ng-app="recommendationApp" ng-view></div>
+<div ng-view></div>
 
 <script>
 var feed1 = new TWTR.Widget({
