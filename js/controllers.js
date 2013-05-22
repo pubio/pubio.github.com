@@ -1,7 +1,10 @@
 'use strict';
 
-function RecommendationListCtrl($scope, $http) {
-  $http.jsonp('http://secure-shelf-4168.herokuapp.com/recommendations/?callback=JSON_CALLBACK').success(function(data) {
+function RecommendationListCtrl($scope, $http, $apiService) {
+	
+	alert($apiServices.getApiRoot() );
+	
+  $http.jsonp($apiServices.getApiRoot() + '/recommendations/?callback=JSON_CALLBACK').success(function(data) {
     $scope.recommendations = data.recommendations;
   });
 
@@ -10,9 +13,16 @@ function RecommendationListCtrl($scope, $http) {
   });
 }
 
-
-function LoginCtrl($scope, $http) {
-  $http.jsonp('http://secure-shelf-4168.herokuapp.com/session/?callback=JSON_CALLBACK').success(function(data) {
-    $scope.recommendations = data.recommendations;
-  });
+function NavBarController($scope, $http) {
+    $scope.onTwitterLogin = function() {
+        window.location = "/auth/twitter";
+    }
+    
+    $scope.user = {};
+    
+    $http({method: 'GET', url: '/api/user'}).
+      success(function(data, status, headers, config) {
+        $scope.user = data;
+    });
+    
 }
